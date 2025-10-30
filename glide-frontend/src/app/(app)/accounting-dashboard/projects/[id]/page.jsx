@@ -178,25 +178,7 @@ export default function ProjectDetailPage() {
         </div>
       </div>
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-4 gap-4">
-        <div className="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-700 p-4">
-          <p className="text-xs text-zinc-500 dark:text-zinc-400">Budget</p>
-          <p className="mt-1 text-lg font-semibold text-zinc-900 dark:text-white">{project.budget}</p>
-        </div>
-        <div className="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-700 p-4">
-          <p className="text-xs text-zinc-500 dark:text-zinc-400">Spent</p>
-          <p className="mt-1 text-lg font-semibold text-zinc-900 dark:text-white">{project.spent}</p>
-        </div>
-        <div className="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-700 p-4">
-          <p className="text-xs text-zinc-500 dark:text-zinc-400">Hours Logged</p>
-          <p className="mt-1 text-lg font-semibold text-zinc-900 dark:text-white">{project.hoursLogged}</p>
-        </div>
-        <div className="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-700 p-4">
-          <p className="text-xs text-zinc-500 dark:text-zinc-400">Due Date</p>
-          <p className="mt-1 text-lg font-semibold text-zinc-900 dark:text-white">{project.dueDate}</p>
-        </div>
-      </div>
+      {/* Stats Cards removed per request */}
 
       {/* Tabs */}
       <div className="border-b border-zinc-200 dark:border-zinc-700">
