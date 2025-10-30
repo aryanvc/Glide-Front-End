@@ -1,0 +1,161 @@
+name: "Catalyst UI Kit - User Journey Tests"
+
+vars:
+  frontend_url: "{{ .env.FRONTEND_URL }}"
+
+tests:
+  - name: "Journey: Homepage to Overview"
+    steps:
+      - name: "Navigate to homepage and verify redirect"
+        plugin: playwright
+        config:
+          role: script
+          headless: false
+          script: |
+            from playwright.sync_api import expect
+
+            page.goto("{{ .env.FRONTEND_URL }}", wait_until="networkidle")
+            expect(page).to_have_url("{{ .env.FRONTEND_URL }}/overview")
+            expect(page).to_have_title("Catalyst")
+            page.wait_for_load_state("networkidle")
+            expect(page.get_by_role("heading", name="Welcome back, Rohan", level=1)).to_be_visible(timeout=5000)
+            expect(page.get_by_text("Active Projects", exact=False).first).to_be_visible()
+            expect(page.get_by_text("Total Spend", exact=False).first).to_be_visible()
+            expect(page.get_by_text("Active Talent", exact=False).first).to_be_visible()
+            expect(page.get_by_text("Pending Approvals", exact=False).first).to_be_visible()
+            expect(page.get_by_role("link", name="Overview")).to_be_visible()
+            expect(page.get_by_role("link", name="Projects")).to_be_visible()
+            expect(page.get_by_role("link", name="Talent")).to_be_visible()
+            expect(page.get_by_role("link", name="Billing")).to_be_visible()
+            expect(page.get_by_text("Q4 Financial Audit", exact=False).first).to_be_visible()
+            expect(page.get_by_role("link", name="New Project")).to_be_visible()
+
+  - name: "Journey: Create New Project"
+    steps:
+      - name: "Fill out project creation form with live preview"
+        plugin: playwright
+        config:
+          role: script
+          headless: false
+          script: |
+            from playwright.sync_api import expect
+
+            page.goto("{{ .env.FRONTEND_URL }}", wait_until="networkidle")
+            page.wait_for_load_state("networkidle")
+            page.get_by_role("link", name="New Project").click()
+            page.wait_for_load_state("networkidle")
+            expect(page).to_have_url("{{ .env.FRONTEND_URL }}/projects/new")
+            expect(page.get_by_role("heading", name="Create New Project", level=1)).to_be_visible()
+            page.get_by_role("textbox", name="e.g., Monthly Bookkeeping & Financial Reporting").fill("E2E Test Project - QA Automation")
+            page.get_by_role("textbox", name="Tell us about your company...").fill("A leading technology company focused on building innovative solutions for modern businesses.")
+            page.get_by_role("textbox", name="Describe what you need help with...").fill("We need assistance with end-to-end testing and quality assurance for our web applications using modern testing frameworks.")
+            button_3_5 = page.get_by_role("button", name="3 – 5 Years").first
+            button_3_5.click()
+            assert button_3_5.get_attribute("aria-pressed") in ["true", "True"]
+            page.get_by_role("button", name="Within 1 Week").first.click()
+            assert page.get_by_role("button", name="Within 1 Week").first.get_attribute("aria-pressed") in ["true", "True", True]
+            page.get_by_role("button", name="Fractional or Part-Time").first.click()
+            assert page.get_by_role("button", name="Fractional or Part-Time").first.get_attribute("aria-pressed") in ["true", "True", True]
+            page.get_by_role("button", name="One-Time Project").first.click()
+            assert page.get_by_role("button", name="One-Time Project").first.get_attribute("aria-pressed") in ["true", "True", True]
+            expect(page.get_by_role("heading", name="E2E Test Project - QA Automation", level=2)).to_be_visible()
+            expect(page.get_by_text("A leading technology company focused on building innovative solutions", exact=False)).to_be_visible()
+            expect(page.get_by_text("We need assistance with end-to-end testing", exact=False)).to_be_visible()
+            expect(page.get_by_text("Preferred Experience:", exact=False)).to_be_visible()
+            expect(page.get_by_text("3 – 5 Years", exact=False)).to_be_visible()
+            expect(page.get_by_role("button", name="Create Project")).to_be_visible()
+
+  - name: "Journey: Navigate Engineer Dashboard"
+    steps:
+      - name: "Explore engineer dashboard and projects"
+        plugin: playwright
+        config:
+          role: script
+          headless: false
+          script: |
+            from playwright.sync_api import expect
+
+            page.goto("{{ .env.FRONTEND_URL }}/engineer-dashboard", wait_until="networkidle")
+            page.wait_for_load_state("networkidle")
+            expect(page).to_have_url("{{ .env.FRONTEND_URL }}/engineer-dashboard")
+            expect(page).to_have_title("Catalyst")
+            expect(page.get_by_role("heading", name="Welcome back, Alex", level=1)).to_be_visible()
+            expect(page.get_by_text("Active Projects", exact=False)).to_be_visible()
+            expect(page.get_by_text("Code Commits", exact=False)).to_be_visible()
+            expect(page.get_by_text("Pull Requests", exact=False)).to_be_visible()
+            expect(page.get_by_text("Team Members", exact=False)).to_be_visible()
+            expect(page.get_by_role("link", name="Dashboard")).to_be_visible()
+            expect(page.get_by_role("link", name="Projects")).to_be_visible()
+            expect(page.get_by_role("link", name="Repositories")).to_be_visible()
+            expect(page.get_by_role("link", name="Team")).to_be_visible()
+            expect(page.get_by_role("link", name="Analytics")).to_be_visible()
+            expect(page.get_by_role("link", name="Settings")).to_be_visible()
+            expect(page.get_by_text("AI Analytics Platform")).to_be_visible()
+            expect(page.get_by_text("Mobile App Redesign")).to_be_visible()
+            expect(page.get_by_text("Cloud Migration")).to_be_visible()
+            view_all_links = page.get_by_role("link", name="View all")
+            expect(view_all_links.first).to_be_visible()
+            view_all_links.first.click()
+            page.wait_for_load_state("networkidle")
+            expect(page).to_have_url("{{ .env.FRONTEND_URL }}/engineer-dashboard/projects")
+            expect(page.get_by_role("heading", name="Projects", level=1)).to_be_visible()
+            expect(page.get_by_role("table")).to_be_visible()
+            expect(page.get_by_role("columnheader", name="Project")).to_be_visible()
+            expect(page.get_by_role("columnheader", name="Status")).to_be_visible()
+            expect(page.get_by_role("columnheader", name="Progress")).to_be_visible()
+            expect(page.get_by_role("columnheader", name="Budget")).to_be_visible()
+            expect(page.get_by_text("AI Analytics Platform")).to_be_visible()
+            expect(page.get_by_text("Mobile App Redesign")).to_be_visible()
+            expect(page.get_by_text("Cloud Migration")).to_be_visible()
+            expect(page.get_by_text("Active", exact=False)).to_be_visible()
+            expect(page.get_by_text("In Review", exact=False)).to_be_visible()
+            expect(page.get_by_text("Planning", exact=False)).to_be_visible()
+
+  - name: "Journey: Navigation Between Pages"
+    steps:
+      - name: "Test navigation flow through multiple pages"
+        plugin: playwright
+        config:
+          role: script
+          headless: false
+          script: |
+            from playwright.sync_api import expect
+
+            page.goto("{{ .env.FRONTEND_URL }}", wait_until="networkidle")
+            page.wait_for_load_state("networkidle")
+            expect(page).to_have_url("{{ .env.FRONTEND_URL }}/overview")
+            page.get_by_role("link", name="Projects").first.click()
+            page.wait_for_load_state("networkidle")
+            expect(page).to_have_url("{{ .env.FRONTEND_URL }}/accounting-dashboard/projects")
+            page.get_by_role("link", name="Overview").click()
+            page.wait_for_load_state("networkidle")
+            expect(page).to_have_url("{{ .env.FRONTEND_URL }}/overview")
+            page.get_by_role("link", name="New Project").click()
+            page.wait_for_load_state("networkidle")
+            expect(page).to_have_url("{{ .env.FRONTEND_URL }}/projects/new")
+            page.get_by_role("button", name="Back").click()
+            page.wait_for_load_state("networkidle")
+            expect(page).to_have_url("{{ .env.FRONTEND_URL }}/overview")
+
+  - name: "Journey: View Project Details from Overview"
+    steps:
+      - name: "Click on project card and verify navigation"
+        plugin: playwright
+        config:
+          role: script
+          headless: false
+          script: |
+            from playwright.sync_api import expect
+
+            page.goto("{{ .env.FRONTEND_URL }}/overview", wait_until="networkidle")
+            page.wait_for_load_state("networkidle")
+            expect(page.get_by_text("Q4 Financial Audit")).to_be_visible(timeout=5000)
+            expect(page.get_by_text("Tax Prep & Filing")).to_be_visible()
+            expect(page.get_by_text("In Progress")).to_be_visible()
+            expect(page.get_by_text("Pending Approval")).to_be_visible()
+            expect(page.get_by_role("heading", name="Pending Approvals", level=2)).to_be_visible()
+            expect(page.get_by_role("button", name="Approve")).to_be_visible()
+            expect(page.get_by_role("button", name="Review")).to_be_visible()
+            view_all_links = page.get_by_role("link", name="View all")
+            expect(view_all_links.first).to_be_visible()
+            expect(view_all_links.last).to_be_visible()

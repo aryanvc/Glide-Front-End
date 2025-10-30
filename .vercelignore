@@ -1,0 +1,5 @@
+.next/
+node_modules/
+.rocketship/
+glide-frontend/.next/
+.DS_Store
