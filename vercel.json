@@ -1,8 +1,5 @@
 {
   "builds": [
-    { "src": "glide-frontend/next.config.mjs", "use": "@vercel/next" }
-  ],
-  "routes": [
-    { "src": "/(.*)", "dest": "glide-frontend/$1" }
+    { "src": "glide-frontend/package.json", "use": "@vercel/next" }
   ]
 }
