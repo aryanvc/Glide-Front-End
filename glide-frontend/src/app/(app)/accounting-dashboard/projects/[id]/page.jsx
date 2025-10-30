@@ -112,25 +112,12 @@ export default function ProjectDetailPage() {
     console.log('Send message to:', applicant)
   }
 
-  const getTabsForStatus = (status) => {
-    const baseTabs = [
+  const getTabsForStatus = () => {
+    return [
       { id: 'overview', label: 'Overview' },
-      { id: 'applicants', label: 'Applicants' }
+      { id: 'applicants', label: 'Applicants' },
+      { id: 'billing', label: 'Billing' },
     ]
-
-    if (status === 'In Progress' || status === 'Completed') {
-      baseTabs.push(
-        { id: 'work', label: 'Active Work' },
-        { id: 'billing', label: 'Billing' }
-      )
-    }
-
-    if (status === 'Completed') {
-      baseTabs.push({ id: 'completion', label: 'Completion' })
-    }
-
-    baseTabs.push({ id: 'activity', label: 'Activity' })
-    return baseTabs
   }
 
   if (!project) {
@@ -141,7 +128,7 @@ export default function ProjectDetailPage() {
     )
   }
 
-  const tabs = getTabsForStatus(project.status)
+  const tabs = getTabsForStatus()
 
   return (
     <div className="space-y-6">
@@ -342,36 +329,6 @@ export default function ProjectDetailPage() {
           </div>
         )}
 
-        {activeTab === 'work' && project.status !== 'Pending Approval' && (
-          <div className="space-y-6">
-            <div className="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-700 p-6">
-              <h3 className="text-sm font-semibold text-zinc-900 dark:text-white mb-4">Work Progress</h3>
-              <div className="space-y-4">
-                <div>
-                  <div className="flex justify-between text-xs text-zinc-600 dark:text-zinc-400 mb-1">
-                    <span>Overall Progress</span>
-                    <span>42%</span>
-                  </div>
-                  <div className="w-full bg-zinc-200 dark:bg-zinc-700 rounded-full h-2">
-                    <div className="bg-lime-500 h-2 rounded-full" style={{ width: '42%' }}></div>
-                  </div>
-                </div>
-                
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="p-3 bg-zinc-50 dark:bg-zinc-800 rounded-lg">
-                    <p className="text-xs text-zinc-600 dark:text-zinc-400">Tasks Completed</p>
-                    <p className="text-lg font-semibold text-zinc-900 dark:text-white">8/19</p>
-                  </div>
-                  <div className="p-3 bg-zinc-50 dark:bg-zinc-800 rounded-lg">
-                    <p className="text-xs text-zinc-600 dark:text-zinc-400">Deliverables</p>
-                    <p className="text-lg font-semibold text-zinc-900 dark:text-white">3/5</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
         {activeTab === 'billing' && project.billing && (
           <div className="space-y-6">
             <div className="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-700 p-6">
@@ -417,31 +374,7 @@ export default function ProjectDetailPage() {
           </div>
         )}
 
-        {activeTab === 'activity' && (
-          <div className="space-y-4">
-            {project.activity && project.activity.length > 0 ? (
-              project.activity.map((item, index) => (
-              <div key={index} className="flex gap-4">
-                <div className="flex flex-col items-center">
-                  <div className={`w-2 h-2 rounded-full ${
-                    item.type === 'billing' ? 'bg-green-500' :
-                    item.type === 'applicant' ? 'bg-blue-500' :
-                    item.type === 'hiring' ? 'bg-lime-500' :
-                    'bg-zinc-500'
-                  }`} />
-                  {index < project.activity.length - 1 && <div className="w-px h-full bg-zinc-200 dark:bg-zinc-700 mt-2" />}
-                </div>
-                <div className="flex-1 pb-6">
-                  <p className="text-xs text-zinc-500 dark:text-zinc-400">{item.date}</p>
-                  <p className="mt-1 text-sm text-zinc-900 dark:text-white">{item.action}</p>
-                </div>
-              </div>
-            ))
-            ) : (
-              <p className="text-sm text-zinc-500 dark:text-zinc-400">No activity yet</p>
-            )}
-          </div>
-        )}
+        {/* Activity tab removed per request */}
       </div>
     </div>
   )
