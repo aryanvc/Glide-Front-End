@@ -137,7 +137,6 @@ export default function ProjectsPage() {
               <TableCell>
                 <div>
                   <div className="text-sm font-medium text-zinc-950 dark:text-white">{project.name}</div>
-                  <div className="text-xs text-zinc-500 dark:text-zinc-400">{project.description}</div>
                 </div>
               </TableCell>
               <TableCell>
