@@ -113,7 +113,7 @@ export function ApplicationLayout({ children }) {
             <div className="px-2">
               <div className="rounded-lg bg-zinc-50 dark:bg-zinc-800/50 p-3 border border-zinc-200 dark:border-zinc-700">
                 <div className="text-center mb-2">
-                  <p className="text-xs/4 font-medium text-zinc-900 dark:text-zinc-100">Let's start!</p>
+                  <p className="text-xs/4 font-medium text-zinc-900 dark:text-zinc-100">Let&apos;s start!</p>
                   <p className="text-[10px]/5 text-zinc-600 dark:text-zinc-400 mt-0.5">Create or add a new request:</p>
                 </div>
                 <div className="flex justify-center">
