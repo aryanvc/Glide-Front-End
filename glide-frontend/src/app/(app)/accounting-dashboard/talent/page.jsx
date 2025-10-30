@@ -28,7 +28,7 @@ export default function TalentPage() {
 
   return (
     <>
-      <div className="flex items-end justify-between">
+      <div className="flex items-center justify-between">
         <Heading className="text-xl">Talent</Heading>
         <div className="flex items-center gap-4">
           <Input className="w-64" placeholder="Search talent..." />
@@ -41,7 +41,7 @@ export default function TalentPage() {
         </div>
       </div>
 
-      <Table className="mt-8 [--gutter:--spacing(6)] lg:[--gutter:--spacing(10)]">
+      <Table className="mt-6 [--gutter:--spacing(6)] lg:[--gutter:--spacing(10)]">
         <TableHead>
           <TableRow>
             <TableHeader>Talent</TableHeader>

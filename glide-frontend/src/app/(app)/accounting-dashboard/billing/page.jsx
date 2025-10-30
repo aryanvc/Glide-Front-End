@@ -77,7 +77,7 @@ export default function BillingPage() {
 
   return (
     <>
-      <div className="flex items-end justify-between">
+      <div className="flex items-center justify-between">
         <Heading className="text-xl">Billing</Heading>
         <div className="flex items-center gap-4">
           <div className="text-right">

@@ -66,13 +66,12 @@ const pendingApprovals = [
 export default function Overview() {
   return (
     <div className="space-y-8">
-      <Heading className="text-xl">Welcome back, Rohan</Heading>
-      
-      <div>
-        <Subheading className="text-sm">Overview</Subheading>
+      <div className="flex items-center justify-between">
+        <Heading className="text-xl">Overview</Heading>
+        <div className="flex items-center gap-3">{/* optional actions */}</div>
       </div>
-      
-      <div className="grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
+
+      <div className="mt-6 grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
         <Stat title="Active Projects" value="8" change="+3" />
         <Stat title="Total Spend" value="$18,450" change="+12.5%" />
         <Stat title="Active Talent" value="12" change="+2" />

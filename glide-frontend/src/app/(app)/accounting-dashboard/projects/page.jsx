@@ -82,7 +82,7 @@ export default function ProjectsPage() {
 
   return (
     <>
-      <div className="flex items-end justify-between gap-4">
+      <div className="flex items-center justify-between gap-4">
         <Heading className="text-xl">My Projects</Heading>
         <div className="flex items-center gap-3 ml-auto">
           <div className="w-64 hidden sm:block">
@@ -104,7 +104,7 @@ export default function ProjectsPage() {
         </div>
       </div>
 
-      <div className="mt-4 flex flex-wrap items-center gap-2">
+      <div className="mt-6 flex flex-wrap items-center gap-2">
         {['All', 'Draft', 'Active', 'Completed', 'Archived'].map((label) => (
           <button
             key={label}
