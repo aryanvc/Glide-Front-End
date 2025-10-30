@@ -223,10 +223,10 @@ export default function ProjectDetailPage() {
                 </div>
               )}
 
-              {/* Scope of Work */}
+              {/* Statement of Work (SOW) */}
               {project.scopeOfWork && (
                 <div>
-                  <h3 className="text-xs font-semibold text-zinc-900 dark:text-white mb-2">About the Project</h3>
+                  <h3 className="text-xs font-semibold text-zinc-900 dark:text-white mb-2">Statement of Work (SOW)</h3>
                   <p className="text-xs text-zinc-700 dark:text-zinc-300 leading-relaxed whitespace-pre-wrap">
                     {project.scopeOfWork}
                   </p>
