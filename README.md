@@ -1,4 +1,4 @@
-# Accounting App (Catalyst UI Kit)
+# Glide Accounting Application
 
 This repository contains an accounting-focused demo app built with Next.js 15, React 19, and Tailwind CSS v4. The app lives under `glide-frontend` and showcases dashboards and flows for accounting projects, billing, and talent.
 
