@@ -11,63 +11,35 @@ import { Input } from '@/components/input'
 const initialProjects = [
   {
     id: 'PRJ-001',
-    name: 'Q4 Financial Audit',
-    description: 'Complete financial audit for Q4 2024',
+    name: 'Monthly Close – Q1',
+    description: 'Month-end reconciliations and review',
     talent: 'Sarah CPA',
-    status: 'In Progress',
-    budget: '$5,000',
-    spent: '$2,100',
-    hoursLogged: 42,
-    dueDate: 'Mar 15, 2025',
-    createdDate: 'Jan 1, 2025',
+    status: 'In Progress', // In Progress | Completed | Draft | Archived
+    type: 'Recurring',     // Recurring | One-Time
   },
   {
     id: 'PRJ-002',
     name: 'Tax Prep & Filing',
-    description: 'Annual tax preparation and filing services',
-    talent: 'Mike Tax',
-    status: 'In Progress',
-    budget: '$3,500',
-    spent: '$1,575',
-    hoursLogged: 28,
-    dueDate: 'Apr 15, 2025',
-    createdDate: 'Jan 5, 2025',
+    description: 'Annual tax preparation and filing',
+    talent: 'Unassigned',
+    status: 'Draft',
+    type: 'One-Time',
   },
   {
     id: 'PRJ-003',
-    name: 'Budget Planning',
-    description: 'Develop comprehensive budget for 2025',
-    talent: 'Lisa Budget',
-    status: 'Pending Approval',
-    budget: '$2,500',
-    spent: '$750',
-    hoursLogged: 15,
-    dueDate: 'Feb 28, 2025',
-    createdDate: 'Jan 10, 2025',
+    name: 'Client Cleanup',
+    description: 'Books cleanup and migration',
+    talent: 'Mike Tax',
+    status: 'In Progress',
+    type: 'One-Time',
   },
   {
     id: 'PRJ-004',
     name: 'Payroll Setup',
-    description: 'Setup and configure payroll system',
-    talent: 'David Payroll',
+    description: 'Configure payroll and integrations',
+    talent: 'Emma Ops',
     status: 'Completed',
-    budget: '$1,800',
-    spent: '$1,800',
-    hoursLogged: 24,
-    dueDate: 'Jan 31, 2025',
-    createdDate: 'Dec 15, 2024',
-  },
-  {
-    id: 'PRJ-005',
-    name: 'Financial Reporting',
-    description: 'Monthly financial reports and analysis',
-    talent: 'Emma Reports',
-    status: 'In Progress',
-    budget: '$4,200',
-    spent: '$2,520',
-    hoursLogged: 60,
-    dueDate: 'Ongoing',
-    createdDate: 'Dec 1, 2024',
+    type: 'One-Time',
   },
 ]
 
@@ -99,6 +71,14 @@ export default function ProjectsPage() {
     const matchesFilter = filter === 'All' ? true : category === filter
     return matchesSearch && matchesFilter
   })
+
+  const statusColor = (status) => {
+    if (status === 'Completed') return 'green'
+    if (status === 'In Progress') return 'blue'
+    if (status === 'Draft') return 'amber'
+    if (status === 'Archived') return 'zinc'
+    return 'zinc'
+  }
 
   return (
     <>
@@ -142,16 +122,13 @@ export default function ProjectsPage() {
         ))}
       </div>
 
-      <Table className="mt-8 [--gutter:--spacing(6)] lg:[--gutter:--spacing(10)]">
+      <Table className="mt-6 [--gutter:--spacing(6)] lg:[--gutter:--spacing(10)]">
         <TableHead>
           <TableRow>
             <TableHeader>Project</TableHeader>
             <TableHeader>Talent</TableHeader>
             <TableHeader>Status</TableHeader>
-            <TableHeader>Budget</TableHeader>
-            <TableHeader>Spent</TableHeader>
-            <TableHeader>Hours</TableHeader>
-            <TableHeader>Due Date</TableHeader>
+            <TableHeader>Type</TableHeader>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -165,25 +142,21 @@ export default function ProjectsPage() {
               </TableCell>
               <TableCell>
                 <div className="flex items-center gap-2">
-                  <Avatar initials="SC" className="size-6" />
+                  <Avatar
+                    initials={
+                      project.talent === 'Unassigned'
+                        ? 'UA'
+                        : project.talent.split(' ').map((w) => w[0]).join('').slice(0, 2)
+                    }
+                    className="size-6"
+                  />
                   <span className="text-zinc-500 dark:text-zinc-400">{project.talent}</span>
                 </div>
               </TableCell>
               <TableCell>
-                <Badge 
-                  color={
-                    project.status === 'Completed' ? 'zinc' : 
-                    project.status === 'In Progress' ? 'blue' : 
-                    'amber'
-                  }
-                >
-                  {project.status}
-                </Badge>
+                <Badge color={statusColor(project.status)}>{project.status}</Badge>
               </TableCell>
-              <TableCell className="text-zinc-500">{project.budget}</TableCell>
-              <TableCell className="text-zinc-500">{project.spent}</TableCell>
-              <TableCell className="text-zinc-500">{project.hoursLogged}</TableCell>
-              <TableCell className="text-zinc-500">{project.dueDate}</TableCell>
+              <TableCell className="text-zinc-500">{project.type}</TableCell>
             </TableRow>
           ))}
         </TableBody>
